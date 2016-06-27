@@ -4,8 +4,20 @@
 
 ```
 As a User
-So I can list a space
+So I access features of the site
 I want to sign up
+```
+
+```
+As a signed up User
+So I can access my account
+I want to log in
+```
+
+```
+As a signed up User
+So I can choose where to stay
+I want to view a list of spaces
 ```
 
 ```
