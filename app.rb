@@ -14,6 +14,7 @@ class MakersBnB < Sinatra::Base
   set :session_secret, 'super secret'
 
   get '/' do
+    redirect '/spaces' if current_user
     redirect '/users/new'
   end
 
@@ -23,9 +24,7 @@ class MakersBnB < Sinatra::Base
   end
 
   post '/users' do
-    @user = User.new(email: params[:email],
-                password: params[:password],
-                password_confirmation: params[:password_confirmation])
+    @user = User.new(params)
     if @user.save
       session[:user_id] = @user.id
       redirect '/spaces'
@@ -44,6 +43,18 @@ class MakersBnB < Sinatra::Base
   get '/spaces' do
     @spaces = Space.all
     erb :'spaces/list'
+  end
+
+  get '/spaces/new' do
+    redirect '/' unless current_user
+    erb :'spaces/new'
+  end
+
+  post '/spaces' do
+    space = Space.new(params)
+    space.user_id = current_user.id
+    space.save
+    redirect '/spaces'
   end
 
   run! if app_file == $0
