@@ -7,21 +7,23 @@ require 'capybara/rspec'
 require 'rspec'
 require_relative 'web_helper'
 require './app'
+require 'date'
 require 'database_cleaner'
 
 Capybara.app = MakersBnB
 
 RSpec.configure do |config|
-  config.before(:suite) do
-    DatabaseCleaner.strategy = :transaction
+
+  config.before :suite do
     DatabaseCleaner.clean_with(:truncation)
+    DatabaseCleaner.strategy = :transaction
   end
 
-  config.before(:each) do
+  config.before :each do
     DatabaseCleaner.start
   end
 
-  config.after(:each) do
+  config.after :each do
     DatabaseCleaner.clean
   end
 

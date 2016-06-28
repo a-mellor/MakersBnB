@@ -4,6 +4,9 @@ require 'sinatra/base'
 require 'sinatra/flash'
 require_relative 'models/user'
 
+require_relative 'data_mapper_setup'
+require_relative 'models/space'
+
 class MakersBnB < Sinatra::Base
 
   register Sinatra::Flash
@@ -36,6 +39,11 @@ class MakersBnB < Sinatra::Base
     def current_user
       @current_user ||= User.get(session[:user_id])
     end
+  end
+
+  get '/spaces' do
+    @spaces = Space.all
+    erb :'spaces/list'
   end
 
   run! if app_file == $0
