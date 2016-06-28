@@ -32,4 +32,8 @@ feature 'User sign up' do
     expect(current_path).to eq('/users')
     expect(page).to have_content('Email has an invalid format')
   end
+
+  scenario 'I cannot sign up with a blank password' do
+    expect { sign_up(password: '', password_confirmation: '') }.to_not change(User, :count)
+  end
 end
