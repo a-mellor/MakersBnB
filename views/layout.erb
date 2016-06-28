@@ -5,6 +5,14 @@
     <title>Makers BnB</title>
   </head>
   <body>
+
+<!-- ========== Log In Link ============== -->
+
+  <a href="/sessions/new">Log in</a>
+
+
+<!-- ========== Sign up welcome ============== -->
+
     <% if current_user %>
       Welcome, <%= current_user.email %>
     <% end %>
