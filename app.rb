@@ -34,6 +34,21 @@ class MakersBnB < Sinatra::Base
     end
   end
 
+  get '/sessions/new' do
+    erb :'sessions/new'
+  end
+
+  post '/sessions' do
+    user = User.authenticate(params[:email], params[:password])
+    if user
+      session[:user_id] = user.id
+      redirect '/spaces'
+    else
+      flash.keep[:notice] = "User is not registered. Please try again."
+      redirect '/sessions/new'
+    end
+  end
+
   helpers do
     def current_user
       @current_user ||= User.get(session[:user_id])
@@ -41,6 +56,7 @@ class MakersBnB < Sinatra::Base
   end
 
   get '/spaces' do
+
     @spaces = Space.all
     erb :'spaces/list'
   end
