@@ -1,7 +1,7 @@
 feature 'User sign up' do
   scenario 'I can sign up as a new user' do
     expect { sign_up }.to change(User, :count).by(1)
-    expect(page).to have_content('Welcome, test@test.com')
+    expect(page).to have_content('Welcome to MakersBnB, test@test.com')
     expect(User.first.email).to eq('test@test.com')
   end
 
@@ -45,22 +45,12 @@ feature 'User sign up' do
   end
 
   scenario 'Logs in user and takes them to the spaces page' do
-    User.create(email: 'sdawes@gmail.com', password: 'password', password_confirmation: 'password')
+    user = User.create(email: 'sdawes@gmail.com', password: 'password', password_confirmation: 'password')
     visit('sessions/new')
-    
-
-
     fill_in(:email, with: 'sdawes@gmail.com')
     fill_in(:password, with: 'password')
     click_button('Log in')
     expect(current_path).to eq('/spaces')
-    expect(page).to have_content('Welcome to MakersBnB')
+    expect(page).to have_content("Welcome to MakersBnB, #{user.email}")
   end
 end
-
-
-
-
-
-
-

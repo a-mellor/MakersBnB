@@ -40,7 +40,14 @@ class MakersBnB < Sinatra::Base
   end
 
   post '/sessions' do
-    redirect '/spaces'
+    user = User.authenticate(params[:email], params[:password])
+    if user
+      session[:user_id] = user.id
+      redirect '/spaces'
+    else
+      flash.keep[:notice] = "User is not registered. Please try again."
+      redirect '/sessions/new'
+    end
   end
 
   helpers do
@@ -50,6 +57,7 @@ class MakersBnB < Sinatra::Base
   end
 
   get '/spaces' do
+
     @spaces = Space.all
     erb :'spaces/list'
   end
