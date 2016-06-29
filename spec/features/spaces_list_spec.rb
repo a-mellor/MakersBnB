@@ -13,4 +13,14 @@ feature 'List of spaces' do
     sign_up
     expect{ list_a_space }.to change(Space, :count).by(1)
   end
+
+  scenario 'user tries to submit incomplete form' do
+    sign_up
+    expect{ list_a_space(name: "", description: "", price: "", available_from: "", available_until: "") }.not_to change(Space, :count)
+    expect(page).to have_content('Name must not be blank')
+    expect(page).to have_content('Description must not be blank')
+    expect(page).to have_content('Price must not be blank')
+    expect(page).to have_content('Available from must not be blank')
+    expect(page).to have_content('Available until must not be blank')
+  end
 end
