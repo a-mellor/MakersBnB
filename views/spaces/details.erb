@@ -1,0 +1,25 @@
+<h4><%= @current_space.name %></h4>
+Description: <%= @current_space.description %><br>
+Price: <%= @current_space.price %><br>
+Available from: <%= @current_space.available_from %><br>
+Available to: <%= @current_space.available_until %><br><br>
+
+<form action='/requests' method='post'>
+  Date required: <input id="check_in_date" type="text" name="check_in_date">
+  
+  <input id="space_id" type="hidden" value="<%=@current_space.id%>" name="space_id">
+  
+  <input type="submit" value="Request space">
+</form>
+
+<script>
+  $(function() {
+    $( "#check_in_date" ).datepicker({
+      minDate: <%= Date.today.strftime("%d/%m/%Y") %>,
+      dateFormat: 'dd/mm/yy',
+      defaultDate: "+1w",
+      changeMonth: true,
+      numberOfMonths: 1,
+    })
+  });
+</script>

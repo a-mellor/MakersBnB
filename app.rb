@@ -2,10 +2,8 @@ ENV['RACK_ENV'] ||= "development"
 
 require 'sinatra/base'
 require 'sinatra/flash'
-require_relative 'models/user'
 
 require_relative 'data_mapper_setup'
-require_relative 'models/space'
 
 class MakersBnB < Sinatra::Base
 
@@ -82,5 +80,29 @@ class MakersBnB < Sinatra::Base
     end
   end
 
+  get '/spaces/details/:id' do
+    @current_space = Space.first(id: params[:id])
+    erb :'spaces/details'
+  end
+
+  post '/requests' do
+    @booking_request = Request.new(check_in_date: params[:check_in_date])
+    @booking_request.user_id = current_user.id
+    @booking_request.space_id = params[:space_id]
+    @booking_request.save
+    erb :'requests'
+  end
+
   run! if app_file == $0
 end
+
+
+
+
+
+
+
+
+
+
+
