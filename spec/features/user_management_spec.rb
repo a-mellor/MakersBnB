@@ -36,7 +36,9 @@ feature 'User sign up' do
   scenario 'I cannot sign up with a blank password' do
     expect { sign_up(password: '', password_confirmation: '') }.to_not change(User, :count)
   end
+end
 
+feature 'User login' do
   scenario 'I want the login link to take me to the login page' do
     visit('/users/new')
     click_link('Log in')
@@ -44,13 +46,20 @@ feature 'User sign up' do
     expect(page).to have_content('Log in to MakersBnB')
   end
 
-  scenario 'Logs in user and takes them to the spaces page' do
+  scenario 'I want to logs in and be taken to the spaces page' do
     user = User.create(email: 'sdawes@gmail.com', password: 'password', password_confirmation: 'password')
-    visit('sessions/new')
-    fill_in(:email, with: 'sdawes@gmail.com')
-    fill_in(:password, with: 'password')
-    click_button('Log in')
+    log_in
     expect(current_path).to eq('/spaces')
     expect(page).to have_content("Welcome to MakersBnB, #{user.email}")
+  end
+end
+
+feature 'User log out' do
+  scenario 'I want to log out to end my session' do
+    user = User.create(email: 'sdawes@gmail.com', password: 'password', password_confirmation: 'password')
+    log_in
+    click_link('Log out')
+    expect(current_path).to eq('/users/new')
+    expect(page).to have_content('Please sign up')
   end
 end
