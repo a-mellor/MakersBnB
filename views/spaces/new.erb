@@ -10,6 +10,8 @@
 <script>
   $(function() {
     $( "#available_from" ).datepicker({
+      minDate: <%= Date.today.strftime("%d/%m/%Y") %>,
+      dateFormat: 'dd/mm/yy',
       defaultDate: "+1w",
       changeMonth: true,
       numberOfMonths: 1,
@@ -18,6 +20,7 @@
       }
     });
     $( "#available_until" ).datepicker({
+      dateFormat: 'dd/mm/yy',
       defaultDate: "+1w",
       changeMonth: true,
       numberOfMonths: 1,

@@ -11,17 +11,27 @@ class Space
   property :available_from, Date, required: true
   property :available_until, Date, required: true
 
-  validates_with_method :available_from, :method => :is_from_future?
+  validates_with_method :available_from, :method => :is_from_date_after_today?
+  validates_with_method :available_until, :method => :is_until_date_after_from_date?
 
   belongs_to :user
 
   private
-  def is_from_future?
-    @available_from = Date.parse("01/01/1900") if @available_from == ""
+  def is_from_date_after_today?
+    return true if @available_from == ""
     if @available_from > Date.today
       true
     else
       [false, "The available from date must be in the future"]
+    end
+  end
+
+  def is_until_date_after_from_date?
+    return true if (@available_until == '' || @available_from == '')
+    if @available_until > @available_from
+      true
+    else
+      [false, "The until date must come after the from date"]
     end
   end
 

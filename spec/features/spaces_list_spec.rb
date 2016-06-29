@@ -24,9 +24,15 @@ feature 'List of spaces' do
     expect(page).to have_content('Available until must not be blank')
   end
 
-  scenario 'available_from is a past date' do
+  scenario 'raises error if available_from is a past date' do
     sign_up
     expect{ list_a_space(available_from: pretty_yesterday) }.not_to change(Space, :count)
     expect(page).to have_content("The available from date must be in the future")
+  end
+
+  scenario 'raises error if available_until is prior to available_from' do
+    sign_up
+    expect{ list_a_space(available_until: '01/01/2030') }.not_to change(Space, :count)
+    expect(page).to have_content("The until date must come after the from date")
   end
 end
