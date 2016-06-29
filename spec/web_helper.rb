@@ -17,3 +17,10 @@ def list_a_space
   fill_in 'price', with: '100'
   click_button 'List this space'
 end
+
+def log_in
+  visit('sessions/new')
+  fill_in(:email, with: 'sdawes@gmail.com')
+  fill_in(:password, with: 'password')
+  click_button('Log in')
+end
