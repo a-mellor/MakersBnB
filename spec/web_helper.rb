@@ -20,8 +20,16 @@ def list_a_space(description: 'cozy flat in central London', name: '1 bed flat',
   click_button 'List this space'
 end
 
+
 def pretty_yesterday
   today = Time.now
   yesterday = today - (24 * 3600)
   yesterday.strftime("%d/%m/%Y")
+end
+
+def log_in
+  visit('sessions/new')
+  fill_in(:email, with: 'sdawes@gmail.com')
+  fill_in(:password, with: 'password')
+  click_button('Log in')
 end

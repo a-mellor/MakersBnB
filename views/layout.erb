@@ -9,16 +9,20 @@
   </head>
   <body>
 
-<!-- ========== Log In Link ============== -->
 
-  <a href="/sessions/new">Log in</a>
+  <!-- ========== Header ============== -->
 
+  <% if current_user %>
+    Welcome to MakersBnB, <%= current_user.email %>
+    <a href="/spaces">Spaces</a>
+    <a href="/spaces">Requests(TBD)</a>
+    <a href="/sessions/end">Log out</a>
+  <% else %>
+    <a href="/sessions/new">Log in</a>
+  <% end %>
 
-<!-- ========== Sign up welcome ============== -->
+  <!-- ========== Errors ============== -->
 
-    <% if current_user %>
-      Welcome to MakersBnB, <%= current_user.email %>
-    <% end %>
     <% if flash[:notice] %>
     <%= flash[:notice] %>
     <% end %>
@@ -30,11 +34,6 @@
       <% end %>
     </ul>
     <% end %>
-<<<<<<< HEAD
-
-
-=======
->>>>>>> master
     <%= yield %>
   </body>
 </html>

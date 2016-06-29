@@ -44,9 +44,14 @@ class MakersBnB < Sinatra::Base
       session[:user_id] = user.id
       redirect '/spaces'
     else
-      flash.keep[:notice] = "User is not registered. Please try again."
+      flash.keep[:notice] = "Incorrect log in details. Please try again."
       redirect '/sessions/new'
     end
+  end
+
+  get '/sessions/end' do
+    session.clear
+    redirect '/'
   end
 
   helpers do
