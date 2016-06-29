@@ -2,5 +2,31 @@
   Name: <input type="text" name="name">
   Price per night: <input type="text" name="price">
   Description: <input type="text" name="description">
+  Available From: <input id="available_from" type="text" name="available_from">
+  Available Until: <input id="available_until" type="text" name="available_until">
   <input type="submit" value="List this space">
 </form>
+
+<script>
+  $(function() {
+    $( "#available_from" ).datepicker({
+      minDate: <%= Date.today.strftime("%d/%m/%Y") %>,
+      dateFormat: 'dd/mm/yy',
+      defaultDate: "+1w",
+      changeMonth: true,
+      numberOfMonths: 1,
+      onClose: function( selectedDate ) {
+        $ ( "#available_until" ).datepicker( "option", "minDate", selectedDate );
+      }
+    });
+    $( "#available_until" ).datepicker({
+      dateFormat: 'dd/mm/yy',
+      defaultDate: "+1w",
+      changeMonth: true,
+      numberOfMonths: 1,
+      onClose: function( selectedDate ) {
+        $ ( "#available_from" ).datepicker( "option", "maxDate", selectedDate );
+      }
+    });
+  });
+</script>

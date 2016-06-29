@@ -74,8 +74,12 @@ class MakersBnB < Sinatra::Base
   post '/spaces' do
     space = Space.new(params)
     space.user_id = current_user.id
-    space.save
-    redirect '/spaces'
+    if space.save
+      redirect '/spaces'
+    else
+      flash.keep[:errors] = space.errors.full_messages
+      redirect '/spaces/new'
+    end
   end
 
   run! if app_file == $0
