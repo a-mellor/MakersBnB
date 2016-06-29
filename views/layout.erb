@@ -6,13 +6,14 @@
   </head>
   <body>
 
-<!-- ========== Log In Link ============== -->
 
-  <a href="/sessions/new">Log in</a>
+  <!-- ========== Log in and log out Link ============== -->
 
-<!-- ========== Log out Link ============== -->
-
-  <a href="/sessions/end">Log out</a>  
+  <% if current_user %>
+    <a href="/sessions/end">Log out</a>
+  <% else %>
+    <a href="/sessions/new">Log in</a>
+  <% end %>
 
 <!-- ========== Sign up welcome ============== -->
 
