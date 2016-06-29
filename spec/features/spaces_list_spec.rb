@@ -35,4 +35,12 @@ feature 'List of spaces' do
     expect{ list_a_space(available_until: '01/01/2030') }.not_to change(Space, :count)
     expect(page).to have_content("The until date must come after the from date")
   end
+
+  scenario '"List a space" button takes to /spaces/new' do
+    sign_up
+    visit '/spaces'
+    click_button 'List a Space'
+    expect(current_path).to eq '/spaces/new'
+    expect(page.status_code).to eq 200
+  end
 end
