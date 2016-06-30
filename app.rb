@@ -59,7 +59,6 @@ class MakersBnB < Sinatra::Base
   end
 
   get '/spaces' do
-
     @spaces = Space.all
     erb :'spaces/list'
   end
@@ -98,6 +97,13 @@ class MakersBnB < Sinatra::Base
   end
 
   get '/requests' do
+    @requested_data = Request.all(user_id: current_user.id)
+    @requested_spaces = []
+    @requested_data.each do |my_request|
+      @requested_spaces << Space.first(id: my_request.space_id)
+    end
+
+
     erb :'requests'
   end
 
