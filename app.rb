@@ -89,20 +89,17 @@ class MakersBnB < Sinatra::Base
     @booking_request = Request.new(check_in_date: params[:check_in_date])
     @booking_request.user_id = current_user.id
     @booking_request.space_id = params[:space_id]
-    @booking_request.save
+    if @booking_request.save
+      redirect '/requests'
+    else
+      flash.keep[:errors] = @booking_request.errors.full_messages
+      redirect "/spaces/details/#{@booking_request.space_id}"
+    end
+  end
+
+  get '/requests' do
     erb :'requests'
   end
 
   run! if app_file == $0
 end
-
-
-
-
-
-
-
-
-
-
-

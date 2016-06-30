@@ -6,9 +6,7 @@ Available to: <%= @current_space.available_until %><br><br>
 
 <form action='/requests' method='post'>
   Date required: <input id="check_in_date" type="text" name="check_in_date">
-  
   <input id="space_id" type="hidden" value="<%=@current_space.id%>" name="space_id">
-  
   <input type="submit" value="Request space">
 </form>
 

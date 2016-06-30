@@ -33,3 +33,12 @@ def log_in
   fill_in(:password, with: 'password')
   click_button('Log in')
 end
+
+def request_space(check_in_date: '01/09/2030')
+  sign_up
+  list_a_space
+  visit '/spaces'
+  click_link '1 bed flat'
+  fill_in :check_in_date, with: check_in_date
+  click_button 'Request space'
+end
