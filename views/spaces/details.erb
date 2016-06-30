@@ -11,13 +11,40 @@ Available to: <%= @current_space.available_until %><br><br>
 </form>
 
 <script>
-  $(function() {
+
+  var unavailableDates = [""]; //list of dates in which the space is not available
+  var minDate = new Date("<%= @current_space.available_from.strftime %>");
+  var maxDate = new Date("<%= @current_space.available_until.strftime%>");
+
+
+  function prettyDate( date ) {
+    var m = date.getMonth(), d = date.getDate(), y = date.getFullYear();
+    return  y + '-' + (m+1) + '-' + d;
+  }
+
+  function isUnavailableDate( date ) {
+    return ($.inArray(prettyDate( date ), unavailableDates) != -1 ||
+            new Date() >= date ||
+            date < minDate ||
+            date > maxDate )
+  }
+
+  function removeUnavailableDates( date ) {
+    for(var i = 0; i < unavailableDates.length; i++) {
+      if(isUnavailableDate( date )){
+        return [false];
+      }
+    }
+    return [true];
+  }
+
+  $(document).ready(function() {
     $( "#check_in_date" ).datepicker({
-      minDate: <%= Date.today.strftime("%d/%m/%Y") %>,
       dateFormat: 'dd/mm/yy',
       defaultDate: "+1w",
       changeMonth: true,
       numberOfMonths: 1,
-    })
+      beforeShowDay: removeUnavailableDates
+    });
   });
 </script>
