@@ -1,13 +1,13 @@
 <h1> Requests </h1>
 
 <ul id="requested_name">
-  <% @requested_spaces.each do |entry| %>
-    <%=entry.name%>
-    <% @requested_data.each do |entry2| %>
-      <%if entry2.space_id == entry.id %>
-        <%=entry2.check_in_date%>
-      <%end%>
-    <%end %>
-    <br>
+  <% @requested_data.each do |single_request| %>
+    <li>
+      <%= (Space.get(single_request.space_id)).name %>
+      <%= single_request.check_in_date.strftime("%d/%m/%Y") %>
+    </li>
   <% end %>
+
+
+
 </ul>
