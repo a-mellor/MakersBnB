@@ -6,6 +6,6 @@
 
 <ul id="spaces">
   <% @spaces.each do |space| %>
-  <li><%= space.name %></li>
+  <li><a href="/spaces/details/<%= space.id %>"><%= space.name.capitalize %></a></li>
   <% end %>
 </ul>
