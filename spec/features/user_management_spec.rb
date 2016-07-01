@@ -46,18 +46,12 @@ feature 'User login' do
     expect(page).to have_content('Log in to MakersBnB')
   end
 
-  scenario 'I want to logs in and be taken to the spaces page' do
-    user = User.create(email: 'sdawes@gmail.com', password: 'password', password_confirmation: 'password')
-    log_in
-    expect(current_path).to eq('/spaces')
-    expect(page).to have_content("Welcome to MakersBnB, #{user.email}")
-  end
+
 end
 
 feature 'User log out' do
   scenario 'I want to log out to end my session' do
-    user = User.create(email: 'sdawes@gmail.com', password: 'password', password_confirmation: 'password')
-    log_in
+    sign_up
     click_link('Log out')
     expect(current_path).to eq('/users/new')
     expect(page).to have_content('Please sign up')

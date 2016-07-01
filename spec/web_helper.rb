@@ -27,16 +27,15 @@ def pretty_yesterday
   yesterday.strftime("%d/%m/%Y")
 end
 
-def log_in
-  visit('sessions/new')
-  fill_in(:email, with: 'sdawes@gmail.com')
-  fill_in(:password, with: 'password')
+def log_in(email: 'test@test.com', password: 'password')
+  visit('/sessions/new')
+  expect(page.status_code).to eq 200
+  fill_in(:email, with: email)
+  fill_in(:password, with: password)
   click_button('Log in')
 end
 
 def request_space(check_in_date: '01/09/2030')
-  sign_up
-  list_a_space
   visit '/spaces'
   click_link '1 bed flat'
   fill_in :check_in_date, with: check_in_date
