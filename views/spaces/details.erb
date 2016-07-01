@@ -12,7 +12,7 @@ Available to: <%= @current_space.available_until %><br><br>
 
 <script>
 
-  var unavailableDates = [""]; //list of dates in which the space is not available
+  var unavailableDates = <%= unavailable_dates(@current_space) %>; //list of dates in which the space is not available
   var minDate = new Date("<%= @current_space.available_from.strftime %>");
   var maxDate = new Date("<%= @current_space.available_until.strftime%>");
 

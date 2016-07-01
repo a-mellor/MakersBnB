@@ -57,6 +57,15 @@ class MakersBnB < Sinatra::Base
     def current_user
       @current_user ||= User.get(session[:user_id])
     end
+
+    def unavailable_dates(space)
+      confirmed_requests = Request.all(space_id: space.id, confirmed: true)
+      dates = []
+      confirmed_requests.each do |single_request|
+        dates << single_request.check_in_date.strftime("%Y-%-m-%d")
+      end
+      dates.to_json
+    end
   end
 
   get '/spaces' do
@@ -110,7 +119,6 @@ class MakersBnB < Sinatra::Base
   get '/requests/review/:request_id' do
     @request_review = Request.get(params[:request_id])
     @space = Space.get(@request_review.space_id)
-
     if (@space.user_id != current_user.id)
       flash.next[:notice] = "You don't have permission to review the request"
       redirect '/requests'
