@@ -3,6 +3,7 @@ class Request
 
   property :id, Serial
   property :check_in_date, Date, required: true
+  property :confirmed, Boolean, required: true, :default => false
 
   belongs_to :space
   belongs_to :user
