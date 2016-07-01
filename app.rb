@@ -110,6 +110,11 @@ class MakersBnB < Sinatra::Base
   get '/requests/review/:request_id' do
     @request_review = Request.get(params[:request_id])
     @space = Space.get(@request_review.space_id)
+
+    if (@space.user_id != current_user.id)
+      flash.next[:notice] = "You don't have permission to review the request"
+      redirect '/requests'
+    end
     @requester = User.get(@request_review.user_id)
     erb :'requests/review'
   end
@@ -123,7 +128,6 @@ class MakersBnB < Sinatra::Base
       flash.keep[:errors] = @request_to_confirm.errors.full_messages
       redirect '/requests'
     end
-    redirect '/requests'
   end
 
   run! if app_file == $0
