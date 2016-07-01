@@ -41,4 +41,29 @@ feature 'Booking request'  do
       expect(page).to have_content "1 bed flat"
     end
   end
+
+  scenario 'user can confirm a request received' do
+    sign_up
+    list_a_space
+    user = User.create(email: "user2@email.com", password: "cherries", password_confirmation: "cherries")
+    space = Space.first
+    request = Request.new(check_in_date: "01/02/2030")
+    request.user_id = user.id
+    request.space_id = space.id
+    request.save
+    request_id = request.id
+
+    visit '/requests'
+
+    find('#requests_received').first(:link).click
+
+    expect(current_path).to eq "/requests/review/#{request.id}"
+    click_button 'Confirm Request'
+    expect(page.status_code).to eq 200
+    within "ul#requests_received" do
+      expect(page).not_to have_content "Not Confirmed"
+    end
+    request_now = Request.get(request_id)
+    expect(request_now.confirmed).to be true
+  end
 end

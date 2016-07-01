@@ -2,7 +2,7 @@
 <h2>Requests Made</h2>
 <ul id="requests_made">
   <% @requests_made.each do |single_request| %>
-    <li>
+    <li class="item">
       <%= (Space.get(single_request.space_id)).name %>
       <%= single_request.check_in_date.strftime("%d/%m/%Y") %>
       <% if single_request.confirmed %>
@@ -17,6 +17,8 @@
 <h2>Requests Received</h2>
 <ul id="requests_received">
   <% @requests_received.each do |single_request| %>
+  <a href= "<%= "/requests/review/#{single_request.id}" %>" >
+
     <li>
       <%= (Space.get(single_request.space_id)).name %>
       <%= single_request.check_in_date.strftime("%d/%m/%Y") %>
@@ -27,5 +29,7 @@
         Not Confirmed
       <% end %>
     </li>
+  </a>
+
   <% end %>
 </ul>
