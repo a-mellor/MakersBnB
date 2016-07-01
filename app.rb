@@ -98,8 +98,14 @@ class MakersBnB < Sinatra::Base
   end
 
   get '/requests' do
-    @requested_data = Request.all(user_id: current_user.id)
-    erb :'requests'
+    @requests_made = Request.all(user_id: current_user.id)
+    @owned_space = current_user.spaces
+    @requests_received = @owned_space.map do |space|
+      space.requests
+    end
+    @requests_received.flatten!
+
+    erb :'requests/requests'
   end
 
   run! if app_file == $0
