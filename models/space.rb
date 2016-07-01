@@ -15,6 +15,7 @@ class Space
   validates_with_method :available_until, :method => :is_until_date_after_from_date?
 
   belongs_to :user
+  has n, :requests
 
   private
   def is_from_date_after_today?
