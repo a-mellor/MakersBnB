@@ -1,5 +1,7 @@
 # Makers_BnB
 
+First group project in collaberation with [sdawes](https://github.com/sdawes), [pkenrick](https://github.com/pkenrick), [alterenzo](https://github.com/alterenzo), [fahmahmood](https://github.com/fahmahmood). An Airbnb clone build in Ruby and Sinatra.
+
 ## User Stories
 
 ```
